@@ -1,144 +1,127 @@
-# 9주차 — 데모 소개 페이지 템플릿 (`week09_demo_intro`)
+# 11주차 — 기말 프로젝트 정의 (`week11_proposal`)
 
-> 본인 프로젝트(예: 6주차 칼로리카운터, 또는 본인이 만든 다른 프로젝트)를 소개하는 정적 1페이지 사이트.
-> Cloudflare Pages에 올려서 `<본인 ID>.aiweb2026.site`로 배포한다.
-> 9주차에는 placeholder 상태로 띄우고, 10주차에 진짜 데모 링크가 살아남.
+> 본인 기말 프로젝트를 한 장(`contents.md`)에 잡는 템플릿이다.
+> 11주차 수업에서 작성 → 강사 적격성 판정 ○ → 12주차부터 구현으로 들어간다.
 
 ---
 
 ## 📁 파일 구성
 
-| 파일 | 역할 | 학생이 교체? |
+| 파일 | 역할 | 학생이 채움? |
 |------|------|--------------|
-| `index.html` | 페이지 본문 (Hero · 데모 카드 · Tech Stack · 어떻게 만들었나 · Giscus) | ✅ 5~6곳 placeholder 교체 |
-| `style.css` | 스타일 (1열 모바일 반응형 + 다크/라이트 자동) | ❌ 손대지 마세요 |
-| `screenshot.png` | 데모 스크린샷 placeholder (1280×720) | ✅ 본인 프로젝트 캡쳐로 교체 |
+| `contents.md` | 본인 기말 프로젝트 한 장 요약 (트랙 / 문제 / 기능 / 완료 조건 등) | ✅ 전부 채움 |
+| `index.html` | 9주차 데모 페이지 — `contents.md`를 인라인 렌더하도록 갱신된 버전 | ❌ (그대로 덮어쓰기) |
+| `style.css` | `contents.md` 렌더 영역(zero-md) 스타일 추가본 | ❌ (그대로 덮어쓰기) |
 | `README.md` | 본 가이드 | ❌ |
+
+> ⚠️ 본인 9주차 리포에 이미 있는 `index.html` / `style.css`는 9주차 시점의 OLD 버전이라 `contents.md`를 못 읽는다. zip의 새 파일로 덮어써야 본인 페이지에 contents가 렌더된다.
 
 ---
 
-## 🚀 사용 흐름 (9주차)
+## 🚀 사용 흐름 (11주차)
 
 ```
 1. 이 zip 압축 해제
-2. 본인 GitHub에 새 PUBLIC 리포 만들기 (예: <username>/s01-aiweb2026)
-3. 4개 파일 모두 push
-4. Cloudflare Pages → Connect to Git → 본인 리포 → Deploy
-5. <project>.pages.dev 접속 확인
-6. index.html placeholder 교체 → push → 1~2분 후 반영 확인
-7. 강사가 클래스 zone에 CNAME 등록 → <id>.aiweb2026.site로 접속 가능
-8. Giscus 위젯 통합 (SECTION 8 참조)
-9. 동료 사이트 댓글 달기 + 본인 사이트 댓글 받기
+2. 본인 9주차 리포(<id>-aiweb2026)의 루트에 zip 안의 3개 파일을 복사·덮어쓰기:
+   - contents.md   (신규 — 학생이 채움)
+   - index.html    (덮어쓰기 — zero-md 인라인 렌더 추가)
+   - style.css     (덮어쓰기 — .content / zero-md 스타일 추가)
+   ⚠️ contents.md 파일명은 반드시 그대로 — 9주차 페이지가 이 이름으로 자동 렌더한다
+3. contents.md 안의 [대괄호 placeholder] 모두 본인 정보로 교체
+4. 적격성 체크리스트 8개 자가 점검 ([ ] → [x]로 표시)
+5. git add contents.md index.html style.css
+   git commit -m "feat: 기말 프로젝트 contents v1 + 9주차 페이지 갱신"
+   git push origin main
+6. 1~2분 후 본인 페이지(<id>.aiweb2026.site) 새로고침 → contents.md가 렌더된 것 확인
+7. 11주차 수업 § 6 강사 라운드에서 ○/△/✗ 판정 받기
 ```
 
 ---
 
-## ✏️ 교체할 placeholder
+## 🖥️ 로컬 미리보기 (push 전)
 
-`index.html`을 열면 `⬇⬇⬇ 본인 정보로 교체 ⬇⬇⬇` 마커가 6군데 있습니다. 본인 프로젝트 정보로 채우세요.
+`index.html`을 탐색기에서 더블클릭하면 브라우저 보안 정책상 `contents.md`를 못 읽어서 빈 박스로 보인다. 로컬에서 확인하려면 http 서버를 띄울 것.
 
-> 💡 어떤 프로젝트를 소개해도 OK — 6주차 칼로리카운터, 본인이 따로 만든 프로젝트, 학기 중 다른 결과물 모두 가능.
-
-### 1. `<title>` + `<meta description>` (line 6~9)
-```html
-<title>🚀 [본인 프로젝트 이름] — by <본인 익명 ID></title>
-<meta name="description" content="[본인 프로젝트 한 줄 설명]" />
+```bash
+cd <본인 9주차 리포>
+python -m http.server 8000
+# 브라우저: http://localhost:8000
 ```
-→ `[본인 프로젝트 이름]`, `[본인 프로젝트 한 줄 설명]`, `<본인 익명 ID>` 세 자리를 본인 정보로 교체.
-
-### 2. Hero 영역 (line 18~21)
-```html
-<h1>🚀 [본인 프로젝트 이름]</h1>
-<p class="tagline">[프로젝트가 무엇을 하는지 한 줄로]</p>
-```
-→ 프로젝트 이름 + 한 줄 catchphrase. 이모지는 자유롭게 (예: 🍱 음식, 🎨 그림, 🤖 챗봇 등).
-
-### 3. 데모 카드 — 스크린샷 (line 28~30)
-```html
-<img class="screenshot" src="screenshot.png" alt="[본인 프로젝트] 데모 화면" />
-```
-→ 같은 폴더의 `screenshot.png`를 본인 프로젝트 화면 캡쳐로 덮어쓰기. (alt 텍스트도 본인 데모에 맞게)
-
-### 4. 데모 카드 — 버튼 2개 (line 33~43)
-```html
-<a class="btn btn-primary" href="#" aria-disabled="true" title="다음 주에 살아납니다">
-  ▶ Live Demo <span class="badge">Coming Week 10</span>
-</a>
-...
-<a class="btn btn-secondary" href="https://github.com/<본인 GitHub username>/<본인 프로젝트 리포>" target="_blank" ...>
-```
-→ 9주차 오늘은 Live Demo 버튼은 그대로 두기. **10주차에 첫 번째 버튼 `href="#"` 를 `href="https://<본인 ID>-demo.aiweb2026.site"`로 교체.**
-→ 두 번째 버튼의 GitHub URL은 본인 프로젝트 리포로.
-
-### 5. Tech Stack (line 51~57)
-```html
-<ul class="stack">
-  <li>[기술 1]</li>
-  <li>[기술 2]</li>
-  <li>[기술 3]</li>
-  ...
-</ul>
-```
-→ 본인 프로젝트가 실제로 쓴 기술로 교체. 다음 주 배포에 쓸 Docker / Oracle / GitHub Actions는 그대로 둬도 OK.
-
-### 6. "어떻게 만들었나" (line 64~70)
-```html
-<p>
-  [무엇을 만들었나 — 프로젝트의 핵심 기능 한 문장.]
-  [어떤 기술 / 모델 / API 를 써서 어떻게 동작시키는가.]
-  [사용자가 어떻게 쓰는가 — 입력은 무엇, 출력은 무엇.]
-</p>
-```
-→ 본인 프로젝트를 3줄로 설명. 무엇을 / 어떻게 / 어떤 기술로.
 
 ---
 
-## 💬 Giscus 위젯 통합 (SECTION 8에서)
+## ✏️ 작성 흐름 (45분 분할)
 
-`index.html` 하단 `<section id="comments">` 안에 placeholder script가 있습니다. 9주차 SECTION 8에서:
-
-1. https://giscus.app/ko 접속 → 본인 리포 입력 → 자동 생성된 script 복사
-2. `index.html`의 기존 `<script src="https://giscus.app/client.js" ...>` 통째 교체
-3. `data-repo` / `data-repo-id` / `data-category-id` 세 값이 본인 것으로 채워져야 함
-
----
-
-## 🔍 검증 체크리스트
-
-- [ ] `<title>`이 본인 프로젝트 이름으로
-- [ ] Hero 제목 + 한 줄 설명이 본인 정보
-- [ ] `screenshot.png`가 본인 프로젝트 캡쳐
-- [ ] "Source on GitHub" 링크가 본인 프로젝트 리포로 연결
-- [ ] Tech Stack이 본인 프로젝트 실제 사용 기술
-- [ ] "어떻게 만들었나"가 본인 프로젝트 설명
-- [ ] Giscus script의 `data-repo`가 본인 리포로
-- [ ] 페이지 하단에 GitHub 로그인 버튼이 있는 댓글창이 보임
+```
+처음 15분:  트랙 / 인프라 / 문제 / 사용자 / 핵심 기능 3개
+다음 15분:  입력→처리→출력 흐름 / 기술 스택 / 데이터 출처
+마지막 15분: 완료 조건 / 적격성 체크리스트 자가 점검
+```
 
 ---
 
-## ⚠️ 자주 막히는 함정
+## ✅ 적격성 체크리스트 8개
 
-| 증상 | 원인 | 해결 |
-|------|------|------|
-| Pages 빌드 실패 `command not found` | Framework preset 자동 감지 잘못 | preset = **None**, build command **공란** |
-| Giscus 댓글창 안 뜸 | 리포 PRIVATE / Discussions OFF / giscus 앱 미설치 | SECTION 8의 3종 체크리스트 |
-| 522 에러 (커스텀 도메인) | zone에 CNAME만, Pages에 도메인 미등록 | Pages → Custom domains 먼저 등록 |
-| `screenshot.png` 너무 큼 | Cloudflare Pages 자산당 25 MiB 한도 | 1280×720 / 압축 (TinyPNG 등) |
-| 모바일에서 글자 안 보임 | screenshot 해상도 낮음 | 1280×720 이상 권장 |
+본인 `contents.md`가 다음 8개를 모두 통과해야 강사 ○ 판정을 받는다.
 
----
-
-## 📝 10주차에서 할 일 (다음 주 예고)
-
-1. Oracle 서버에 본인 프로젝트 Docker 배포 → `<id>-demo.aiweb2026.site` 작동
-2. 본 페이지의 "Live Demo" 버튼 `href="#"` → `href="https://<id>-demo.aiweb2026.site"` 교체
-3. push → Cloudflare Pages 자동 빌드 → 버튼 살아남
-4. 동료들이 9주차에 단 댓글 thread에 답글 ("이제 데모 진짜 작동해요!")
+```
+□ AI 기능이 핵심에 있는가 (단순 CRUD/회원관리는 X)
+□ inference만 필요한가 (모델 학습 불필요)
+□ 모델 크기 1GB 이하 또는 외부 API 호출
+□ 한 요청당 처리 시간 30초 이내
+□ 영구 저장 불필요 또는 외부 무료 DB로 분리 가능
+□ 데이터 출처 — 본인/공개 데이터셋/공개 API. 저작권·개인정보 OK
+□ 학기 후 본인 GitHub + Cloudflare + (OCI 또는 HF)만으로 유지 가능
+□ 완료 조건 한 줄 — "이게 되면 끝"이 명확
+```
 
 ---
 
-## 출처
+## 🛤️ 트랙 시안 (택 1)
 
-- 본 템플릿: `00_for_me/src/week09_demo_intro/`
-- 9주차 강의안: `00_for_me/docs/09_week09.html`
-- 분배표: `00_for_me/docs/student_subdomain_assignments.md`
+| 트랙 | 패턴 | 응용 예 |
+|------|------|--------|
+| **A. LLM API 챗봇** | OpenAI/Anthropic/Gemini API + Gradio/Streamlit | 도메인 챗봇, 문서 QA, 번역, 코드 리뷰 |
+| **B. HF 모델 매시업** | HF 작은 모델 1~2개 조합 (1GB 이하) | 이미지 분류, 번역, 요약, 음성→텍스트 |
+| **C. 외부 API + LLM** | 공공/외부 API + LLM 가공 | 뉴스 요약기, 공공데이터 인사이트, 위키 학습 도우미 |
+| **자유** | 위 외 본인 아이디어 | 적격성 8개 통과 필수, 강사 사전 협의 |
+
+---
+
+## 🚧 안티패턴 — 이런 건 ✗
+
+다음 패턴은 강사 라운드에서 즉시 ✗ 판정이 난다. 우회 방향을 함께 적었다.
+
+| 안티패턴 | 우회 |
+|---------|------|
+| 유튜브/인스타 같은 플랫폼 만들기 | "○○ 영상에 자막 자동 생성" 같은 단일 기능으로 축소 |
+| ChatGPT를 처음부터 만들기 | "특정 도메인 챗봇 — GPT API + 프롬프트 엔지니어링" |
+| 회원가입·로그인 시스템 | 단일 데모로 인증 빼기 |
+| 주식·코인 가격 예측 매수신호 | "과거 데이터 시각화·패턴 탐지"까지만 |
+| 특정인 얼굴 인식·추적 | "본인 얼굴 필터" 같은 자기참조 |
+| 실시간 화상회의 AI 비서 | "회의 녹취 후 요약" (비실시간) |
+| 본인 GPU/노트북에서 돌리겠다 | OCI 또는 HF Spaces로 호스팅 강제 |
+
+---
+
+## 📅 학기 후반 일정
+
+```
+11주차 (오늘):  정의 — contents.md v1, 트랙 확정
+12주차:         구현 1차 — Claude Code 셋업 + 보일러플레이트 + 핵심 기능 1개
+13주차:         구현 2차 — 마무리 + Live 배포
+14주차:         발표 리허설 + 피어리뷰
+15주차:         발표
+```
+
+---
+
+## 🆘 자주 막히는 곳
+
+| 막힌 곳 | 한 줄 힌트 |
+|--------|---------|
+| 문제를 못 잡음 | 본인이 평소 불편하던 것 1개. 또는 본인 일/취미에 AI가 끼면 좋아질 곳 1개 |
+| 트랙 선택 못 함 | API 비용 부담 없으면 A. 모델 직접 다루고 싶으면 B. 데이터 좋아하면 C |
+| 핵심 기능을 5~7개로 늘림 | 3개로 줄인다. 못 줄이면 진짜 핵심 1개만 |
+| 완료 조건이 추상적 | "잘 작동한다" X. "입력 A를 넣으면 출력 B가 30초 안에 나온다" O |
+| 본인 페이지에 contents.md가 빈 박스로 보임 | 파일 이름이 정확히 `contents.md`인지 확인 + http 서버 띄워 미리보기 |
